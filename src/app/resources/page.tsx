@@ -8,6 +8,23 @@ import { useState } from "react";
 import { ResourceCard } from "@/components/resources/ResourceCard";
 import { ResourceFormModal } from "@/components/resources/ResourceFormModal";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { motion, AnimatePresence, Variants } from "framer-motion";
+
+const container: Variants = {
+    hidden: { opacity: 0 },
+    show: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.1
+        }
+    }
+};
+
+const itemPop: Variants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    show: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 350, damping: 25 } },
+    exit: { opacity: 0, scale: 0.8, transition: { duration: 0.2 } }
+};
 
 export default function ResourcesPage() {
     const { data: resources, isLoading } = useResources();
@@ -52,9 +69,15 @@ export default function ResourcesPage() {
                         <Skeleton className="h-[180px] w-full rounded-xl" />
                     </>
                 ) : filteredResources.length > 0 ? (
-                    filteredResources.map((resource) => (
-                        <ResourceCard key={resource.id} resource={resource} />
-                    ))
+                    <motion.div variants={container} initial="hidden" animate="show" className="col-span-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <AnimatePresence mode="popLayout">
+                            {filteredResources.map((resource) => (
+                                <motion.div key={resource.id} variants={itemPop} layout initial="hidden" animate="show" exit="exit" className="h-full">
+                                    <ResourceCard resource={resource} />
+                                </motion.div>
+                            ))}
+                        </AnimatePresence>
+                    </motion.div>
                 ) : (
                     <div className="glass-card col-span-full flex flex-col items-center justify-center p-14 text-center rounded-xl border-dashed">
                         <h3 className="mt-4 text-xl font-space font-bold text-white">No resources found</h3>

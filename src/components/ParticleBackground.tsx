@@ -38,8 +38,8 @@ class Particle {
         ctx.save();
         ctx.globalAlpha = this.opacity;
         // Glow effect
-        ctx.fillStyle = isDarkMode ? '#818CF8' : '#4F46E5'; // Indigo colors
-        ctx.shadowColor = isDarkMode ? '#818CF8' : '#4F46E5';
+        ctx.fillStyle = isDarkMode ? '#FFFFFF' : '#000000'; // White particles
+        ctx.shadowColor = isDarkMode ? '#FFFFFF' : '#000000';
         ctx.shadowBlur = 15;
 
         ctx.beginPath();

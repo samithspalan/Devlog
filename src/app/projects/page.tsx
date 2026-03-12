@@ -7,6 +7,22 @@ import { Plus } from "lucide-react";
 import { useState } from "react";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { ProjectFormModal } from "@/components/projects/ProjectFormModal";
+import { motion, Variants } from "framer-motion";
+
+const container: Variants = {
+    hidden: { opacity: 0 },
+    show: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.1
+        }
+    }
+};
+
+const itemFadeUp: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 200, damping: 20 } }
+};
 
 export default function ProjectsPage() {
     const { data: projects, isLoading } = useProjects();
@@ -33,9 +49,13 @@ export default function ProjectsPage() {
                         <Skeleton className="h-[250px] w-full rounded-xl" />
                     </>
                 ) : projects && projects.length > 0 ? (
-                    projects.map((project) => (
-                        <ProjectCard key={project.id} project={project} />
-                    ))
+                    <motion.div variants={container} initial="hidden" animate="show" className="col-span-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {projects.map((project) => (
+                            <motion.div key={project.id} variants={itemFadeUp} className="h-full">
+                                <ProjectCard project={project} />
+                            </motion.div>
+                        ))}
+                    </motion.div>
                 ) : (
                     <div className="glass-card col-span-full flex flex-col items-center justify-center p-14 text-center rounded-xl border-dashed">
                         <h3 className="mt-4 text-xl font-space font-bold text-white">No projects found</h3>

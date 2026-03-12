@@ -7,6 +7,22 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 import { EntryFormModal } from "@/components/entries/EntryFormModal";
+import { motion, Variants } from "framer-motion";
+
+const container: Variants = {
+    hidden: { opacity: 0 },
+    show: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.1
+        }
+    }
+};
+
+const itemSlideLeft: Variants = {
+    hidden: { opacity: 0, x: -20 },
+    show: { opacity: 1, x: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+};
 
 export default function LogPage() {
     const { data: entries, isLoading } = useEntries();
@@ -34,9 +50,13 @@ export default function LogPage() {
                         <Skeleton className="h-[200px] w-full rounded-xl" />
                     </>
                 ) : entries && entries.length > 0 ? (
-                    entries.map((entry) => (
-                        <EntryCard key={entry.id} entry={entry} />
-                    ))
+                    <motion.div variants={container} initial="hidden" animate="show" className="space-y-6">
+                        {entries.map((entry) => (
+                            <motion.div key={entry.id} variants={itemSlideLeft}>
+                                <EntryCard entry={entry} />
+                            </motion.div>
+                        ))}
+                    </motion.div>
                 ) : (
                     <div className="glass-card flex flex-col items-center justify-center p-14 text-center rounded-xl border-dashed">
                         <h3 className="mt-4 text-xl font-space font-bold text-white">No entries yet</h3>
