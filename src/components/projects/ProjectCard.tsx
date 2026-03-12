@@ -18,7 +18,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
     }
 
     return (
-        <Card className="group flex flex-col hover:shadow-lg transition-all duration-300 dark:bg-zinc-900/50 hover:bg-zinc-50/50 dark:hover:bg-zinc-900 border-zinc-200 dark:border-zinc-800">
+        <Card className="glass-card group flex flex-col relative overflow-hidden">
             <CardHeader className="pb-3 border-b border-transparent">
                 <div className="flex justify-between items-start gap-4">
                     <Link href={`/projects/${project.id}`} className="hover:underline font-bold text-xl tracking-tight line-clamp-1">
@@ -26,7 +26,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
                     </Link>
                     <StatusBadge status={project.status} />
                 </div>
-                <p className="text-zinc-500 dark:text-zinc-400 text-sm mt-2 line-clamp-2 min-h-[40px]">
+                <p className="text-zinc-400 text-sm mt-2 line-clamp-2 min-h-[40px]">
                     {project.description}
                 </p>
             </CardHeader>
@@ -39,7 +39,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
                         </div>
                         <div className="flex flex-wrap gap-1.5">
                             {techStack.slice(0, 4).map((tech) => (
-                                <Badge key={tech} variant="secondary" className="bg-zinc-100 text-zinc-600 dark:bg-zinc-800/80 dark:text-zinc-300 px-2 py-0 text-xs shadow-sm">
+                                <Badge key={tech} variant="secondary" className="bg-white/5 text-zinc-300 border border-white/10 hover:bg-white/10 px-2 py-0 text-xs shadow-sm shadow-black/50">
                                     {tech}
                                 </Badge>
                             ))}
@@ -51,7 +51,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 )}
             </CardContent>
 
-            <CardFooter className="border-t border-zinc-100 dark:border-zinc-800/50 pt-3 pb-3 px-6 flex items-center justify-between text-zinc-500 dark:text-zinc-400">
+            <CardFooter className="border-t border-white/10 pt-3 pb-3 px-6 flex items-center justify-between text-zinc-400 relative z-10 bg-black/20">
                 <div className="flex gap-4">
                     {project.repoUrl && (
                         <a href={project.repoUrl} target="_blank" rel="noreferrer" className="hover:text-zinc-900 dark:hover:text-white transition-colors">

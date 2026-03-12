@@ -23,11 +23,11 @@ export function ResourceCard({ resource }: ResourceCardProps) {
     };
 
     return (
-        <Card className="group flex flex-col hover:shadow-lg transition-all duration-300 dark:bg-zinc-900/50 hover:bg-zinc-50/50 dark:hover:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 relative">
+        <Card className="glass-card group flex flex-col relative overflow-hidden">
             <CardHeader className="pb-2">
                 <div className="flex items-start justify-between gap-4">
                     <div className="flex gap-3">
-                        <div className="p-2.5 bg-zinc-100 dark:bg-zinc-800 rounded-lg shrink-0 w-max h-max">
+                        <div className="p-2.5 bg-white/5 border border-white/10 shadow-inner rounded-lg shrink-0 w-max h-max">
                             {getIcon(resource.category)}
                         </div>
                         <div>
@@ -43,7 +43,7 @@ export function ResourceCard({ resource }: ResourceCardProps) {
                         {resource.isFavorite && (
                             <Star className="w-4 h-4 fill-amber-400 text-amber-400 shrink-0" />
                         )}
-                        <Badge variant="outline" className={`text-[10px] px-1.5 shrink-0 ${resource.isRead ? 'bg-zinc-100 text-zinc-500 dark:bg-zinc-800 border-0' : 'bg-transparent text-zinc-800 border-zinc-200 dark:border-zinc-700 dark:text-zinc-300'}`}>
+                        <Badge variant="outline" className={`text-[10px] px-1.5 shrink-0 ${resource.isRead ? 'bg-white/5 text-zinc-500 border-white/5' : 'bg-white/10 text-zinc-300 border-white/20'}`}>
                             {resource.isRead ? "READ" : "UNREAD"}
                         </Badge>
                     </div>
@@ -52,7 +52,7 @@ export function ResourceCard({ resource }: ResourceCardProps) {
 
             <CardContent className="flex-1 pt-2 pb-4 text-sm">
                 {resource.notes && (
-                    <p className="text-zinc-600 dark:text-zinc-400 border-l-2 border-zinc-200 dark:border-zinc-700 pl-3 py-1 mb-4 italic text-sm">
+                    <p className="text-zinc-400 border-l-2 border-indigo-500/50 pl-3 py-1 mb-4 italic text-sm">
                         {resource.notes}
                     </p>
                 )}

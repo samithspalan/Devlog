@@ -36,7 +36,7 @@ export default function ResourcesPage() {
                             <SelectItem value="Course">Courses</SelectItem>
                         </SelectContent>
                     </Select>
-                    <Button onClick={() => setIsFormOpen(true)} className="gap-2 bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200 h-9">
+                    <Button onClick={() => setIsFormOpen(true)} className="gap-2 bg-indigo-500 text-white hover:bg-indigo-600 shadow-[0_0_15px_-3px_rgba(99,102,241,0.5)] h-9 transition-all">
                         <Plus className="h-4 w-4" />
                         Add Link
                     </Button>
@@ -56,18 +56,18 @@ export default function ResourcesPage() {
                         <ResourceCard key={resource.id} resource={resource} />
                     ))
                 ) : (
-                    <div className="col-span-full flex flex-col items-center justify-center p-12 text-center rounded-xl border border-dashed border-zinc-200 dark:border-zinc-800">
-                        <h3 className="mt-4 text-lg font-semibold">No resources found</h3>
-                        <p className="mt-2 text-sm text-zinc-500">
+                    <div className="glass-card col-span-full flex flex-col items-center justify-center p-14 text-center rounded-xl border-dashed">
+                        <h3 className="mt-4 text-xl font-space font-bold text-white">No resources found</h3>
+                        <p className="mt-2 text-sm text-zinc-400 font-medium">
                             {filter !== "All" ? `You haven't added any ${filter.toLowerCase()}s yet.` : "Save your first helpful link."}
                         </p>
                         {filter === "All" && (
-                            <Button onClick={() => setIsFormOpen(true)} variant="outline" className="mt-4">
+                            <Button onClick={() => setIsFormOpen(true)} variant="outline" className="mt-6 bg-white/5 border-white/10 hover:bg-white/10 text-white">
                                 Add Bookmark
                             </Button>
                         )}
                         {filter !== "All" && (
-                            <Button onClick={() => setFilter("All")} variant="outline" className="mt-4">
+                            <Button onClick={() => setFilter("All")} variant="outline" className="mt-6 bg-white/5 border-white/10 hover:bg-white/10 text-white">
                                 Clear Filters
                             </Button>
                         )}

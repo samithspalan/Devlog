@@ -1,0 +1,27 @@
+
+> devlog@0.1.0 build
+> next build
+
+▲ Next.js 16.1.6 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 3.8s
+  Running TypeScript ...
+Failed to compile.
+
+./src/components/entries/EntryFormModal.tsx:44:9
+Type error: Type 'Resolver<{ title: string; body: string; date: string; tags: string[]; projectId?: string | null | undefined; }, any, { title: string; body: string; date: Date; tags: string[]; projectId?: string | null | undefined; }>' is not assignable to type 'Resolver<{ title: string; body: string; date: Date; tags: string[]; projectId?: string | null | undefined; }, any, { title: string; body: string; date: Date; tags: string[]; projectId?: string | null | undefined; }>'.
+  Types of parameters 'values' and 'values' are incompatible.
+    Type '{ title: string; body: string; date: Date; tags: string[]; projectId?: string | null | undefined; }' is not assignable to type '{ title: string; body: string; date: string; tags: string[]; projectId?: string | null | undefined; }'.
+      Types of property 'date' are incompatible.
+        Type 'Date' is not assignable to type 'string'.
+
+[0m [90m 42 |[39m
+ [90m 43 |[39m     [36mconst[39m form [33m=[39m useForm[33m<[39m[33mEntryInput[39m[33m>[39m({
+[31m[1m>[22m[39m[90m 44 |[39m         resolver[33m:[39m zodResolver(entrySchema)[33m,[39m
+ [90m    |[39m         [31m[1m^[22m[39m
+ [90m 45 |[39m         defaultValues[33m:[39m {
+ [90m 46 |[39m             title[33m:[39m entryToEdit[33m?[39m[33m.[39mtitle [33m||[39m [32m""[39m[33m,[39m
+ [90m 47 |[39m             body[33m:[39m entryToEdit[33m?[39m[33m.[39mbody [33m||[39m [32m""[39m[33m,[39m[0m
+Next.js build worker exited with code: 1 and signal: null

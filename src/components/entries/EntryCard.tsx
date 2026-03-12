@@ -18,8 +18,8 @@ export function EntryCard({ entry }: EntryCardProps) {
     }
 
     return (
-        <Card className="group hover:shadow-lg transition-all duration-300 dark:bg-zinc-900/50 hover:bg-zinc-50/50 dark:hover:bg-zinc-900 border-zinc-200 dark:border-zinc-800 overflow-hidden relative">
-            <CardHeader className="pb-3 border-b border-zinc-100 dark:border-zinc-800/50">
+        <Card className="glass-card group overflow-hidden relative">
+            <CardHeader className="pb-3 border-b border-white/10">
                 <div className="flex items-start justify-between">
                     <div className="space-y-2">
                         <h3 className="font-semibold text-xl leading-none tracking-tight">
@@ -28,7 +28,7 @@ export function EntryCard({ entry }: EntryCardProps) {
                                 <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity translate-x-[-10px] group-hover:translate-x-0 transition-transform" />
                             </Link>
                         </h3>
-                        <div className="flex flex-wrap items-center gap-4 text-sm text-zinc-500 dark:text-zinc-400">
+                        <div className="flex flex-wrap items-center gap-4 text-sm text-zinc-400">
                             <span className="flex items-center gap-1.5 align-middle">
                                 <Calendar className="w-4 h-4" />
                                 {format(new Date(entry.date), 'MMMM d, yyyy')}
@@ -46,7 +46,7 @@ export function EntryCard({ entry }: EntryCardProps) {
                 </div>
             </CardHeader>
             <CardContent className="pt-4">
-                <div className="prose dark:prose-invert max-w-none text-zinc-600 dark:text-zinc-400 line-clamp-3">
+                <div className="prose prose-invert max-w-none text-zinc-400 line-clamp-3">
                     {entry.body.split('\n').map((line, i) => (
                         <p key={i} className="mb-2 last:mb-0">{line}</p>
                     ))}
@@ -54,7 +54,7 @@ export function EntryCard({ entry }: EntryCardProps) {
                 {tags.length > 0 && (
                     <div className="flex flex-wrap gap-2 mt-6">
                         {tags.map((tag) => (
-                            <Badge key={tag} variant="secondary" className="bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700">
+                            <Badge key={tag} variant="secondary" className="bg-white/5 text-zinc-300 border border-white/10 hover:bg-white/10 transition-colors">
                                 {tag}
                             </Badge>
                         ))}

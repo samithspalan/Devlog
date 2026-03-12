@@ -3,7 +3,7 @@ import { z } from "zod";
 export const entrySchema = z.object({
     title: z.string().min(1, "Title is required").max(100),
     body: z.string().min(1, "Body is required"),
-    date: z.string().transform((str) => new Date(str)),
+    date: z.string(),
     tags: z.array(z.string()).min(1, "At least one tag is required"),
     projectId: z.string().optional().nullable(),
 });
@@ -27,8 +27,8 @@ export const resourceSchema = z.object({
     url: z.string().url("Must be a valid URL"),
     category: z.enum(["Article", "Video", "Docs", "Course", "Other"]),
     notes: z.string().optional().nullable(),
-    isRead: z.boolean().default(false),
-    isFavorite: z.boolean().default(false),
+    isRead: z.boolean(),
+    isFavorite: z.boolean(),
     entryId: z.string().optional().nullable(),
     projectId: z.string().optional().nullable(),
 });

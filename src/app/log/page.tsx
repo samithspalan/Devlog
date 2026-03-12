@@ -19,10 +19,12 @@ export default function LogPage() {
                     <h1 className="text-3xl font-bold tracking-tight">Learning Log</h1>
                     <p className="text-zinc-500 mt-1">Chronological journal of your daily learnings.</p>
                 </div>
-                <Button onClick={() => setIsFormOpen(true)} className="gap-2 bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200">
-                    <Plus className="h-4 w-4" />
-                    New Entry
-                </Button>
+                <div className="flex items-center gap-4">
+                    <Button onClick={() => setIsFormOpen(true)} className="gap-2 bg-indigo-500 text-white hover:bg-indigo-600 shadow-[0_0_15px_-3px_rgba(99,102,241,0.5)] transition-all">
+                        <Plus className="h-4 w-4" />
+                        New Entry
+                    </Button>
+                </div>
             </div>
 
             <div className="space-y-6">
@@ -36,12 +38,12 @@ export default function LogPage() {
                         <EntryCard key={entry.id} entry={entry} />
                     ))
                 ) : (
-                    <div className="flex flex-col items-center justify-center p-12 text-center rounded-xl border border-dashed border-zinc-200 dark:border-zinc-800">
-                        <h3 className="mt-4 text-lg font-semibold">No entries yet</h3>
-                        <p className="mt-2 text-sm text-zinc-500">
+                    <div className="glass-card flex flex-col items-center justify-center p-14 text-center rounded-xl border-dashed">
+                        <h3 className="mt-4 text-xl font-space font-bold text-white">No entries yet</h3>
+                        <p className="mt-2 text-sm text-zinc-400 font-medium">
                             Start documenting your learning journey by creating your first entry.
                         </p>
-                        <Button onClick={() => setIsFormOpen(true)} variant="outline" className="mt-4">
+                        <Button onClick={() => setIsFormOpen(true)} variant="outline" className="mt-6 bg-white/5 border-white/10 hover:bg-white/10 text-white">
                             Create Entry
                         </Button>
                     </div>

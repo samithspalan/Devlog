@@ -4,7 +4,7 @@ import { useDashboard } from "@/lib/hooks";
 import { ActivityChart } from "@/components/dashboard/ActivityChart";
 import { StatsCard } from "@/components/dashboard/StatsCard";
 import { TagCloud } from "@/components/dashboard/TagCloud";
-import { BookOpen, FolderGit2, Bookmark, Flame } from "lucide-react";
+import { BookOpen, FolderGit2, Bookmark, Flame, Zap } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function DashboardPage() {
@@ -12,20 +12,20 @@ export default function DashboardPage() {
 
     if (isLoading || !data) {
         return (
-            <div className="space-y-6">
+            <div className="space-y-8 max-w-7xl mx-auto">
                 <div>
-                    <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-                    <p className="text-zinc-500">Your developer learning journey at a glance.</p>
+                    <h1 className="text-4xl font-space font-extrabold tracking-tight">Dashboard</h1>
+                    <p className="text-zinc-400 font-medium">Loading your telemetry...</p>
                 </div>
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                    <Skeleton className="h-[120px] w-full rounded-xl" />
-                    <Skeleton className="h-[120px] w-full rounded-xl" />
-                    <Skeleton className="h-[120px] w-full rounded-xl" />
-                    <Skeleton className="h-[120px] w-full rounded-xl" />
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                    <Skeleton className="h-[140px] w-full rounded-2xl bg-white/5" />
+                    <Skeleton className="h-[140px] w-full rounded-2xl bg-white/5" />
+                    <Skeleton className="h-[140px] w-full rounded-2xl bg-white/5" />
+                    <Skeleton className="h-[140px] w-full rounded-2xl bg-white/5" />
                 </div>
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-                    <Skeleton className="col-span-4 h-[350px] rounded-xl" />
-                    <Skeleton className="col-span-3 h-[350px] rounded-xl" />
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
+                    <Skeleton className="col-span-4 h-[400px] rounded-2xl bg-white/5" />
+                    <Skeleton className="col-span-3 h-[400px] rounded-2xl bg-white/5" />
                 </div>
             </div>
         );
@@ -34,42 +34,56 @@ export default function DashboardPage() {
     const { stats, topTags, activityData } = data;
 
     return (
-        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <div>
-                <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-                <p className="text-zinc-500 mt-1">Your developer learning journey at a glance.</p>
+        <div className="space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-700 max-w-7xl mx-auto pb-12">
+            <div className="relative">
+                <div className="absolute -left-10 top-0 w-20 h-20 bg-indigo-500/20 blur-3xl rounded-full"></div>
+                <div className="flex items-start justify-between">
+                    <div>
+                        <h1 className="text-5xl font-extrabold font-space text-gradient tracking-tight">
+                            Developer Overview
+                        </h1>
+                        <p className="text-lg text-zinc-400 mt-2 font-medium flex items-center gap-2">
+                            <Zap className="w-4 h-4 text-yellow-500" />
+                            Your productivity telemetry at a glance.
+                        </p>
+                    </div>
+                </div>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                 <StatsCard
-                    title="Total Log Entries"
+                    title="Total Logs"
                     value={stats.totalEntries.toString()}
-                    icon={<BookOpen className="h-4 w-4 text-zinc-500" />}
+                    icon={<BookOpen className="h-5 w-5 text-indigo-400" />}
                     description="Learning journal logs"
+                    className="border-indigo-500/20 shadow-[0_0_30px_-15px_rgba(99,102,241,0.5)]"
                 />
                 <StatsCard
                     title="Current Streak"
                     value={`${stats.currentStreak} days`}
-                    icon={<Flame className="h-4 w-4 text-orange-500" />}
+                    icon={<Flame className="h-5 w-5 text-orange-400" />}
                     description="Consecutive days logging"
+                    className="border-orange-500/20 shadow-[0_0_30px_-15px_rgba(249,115,22,0.5)]"
                 />
                 <StatsCard
                     title="Active Projects"
                     value={stats.totalProjects.toString()}
-                    icon={<FolderGit2 className="h-4 w-4 text-zinc-500" />}
+                    icon={<FolderGit2 className="h-5 w-5 text-pink-400" />}
                     description="Projects being built"
+                    className="border-pink-500/20 shadow-[0_0_30px_-15px_rgba(236,72,153,0.5)]"
                 />
                 <StatsCard
-                    title="Saved Resources"
+                    title="Resources"
                     value={stats.totalResources.toString()}
-                    icon={<Bookmark className="h-4 w-4 text-zinc-500" />}
+                    icon={<Bookmark className="h-5 w-5 text-emerald-400" />}
                     description="Bookmarks and docs"
+                    className="border-emerald-500/20 shadow-[0_0_30px_-15px_rgba(16,185,129,0.5)]"
                 />
             </div>
 
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
-                <ActivityChart data={activityData} className="col-span-4" />
-                <TagCloud tags={topTags} className="col-span-3" />
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-7 pt-4">
+                <ActivityChart data={activityData} className="col-span-4 lg:col-span-5 h-[450px]" />
+                <TagCloud tags={topTags} className="col-span-3 lg:col-span-2 h-[450px]" />
             </div>
         </div>
     );

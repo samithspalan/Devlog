@@ -1,23 +1,23 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
 import { Toaster } from "@/components/ui/sonner";
-import Link from "next/form";
 import Sidebar from "@/components/Sidebar";
+import ParticleBackground from "@/components/ParticleBackground";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "DevLog - Developer Learning Journal & Project Tracker",
+  title: "DevLog - Premium Developer Tracker",
   description: "Track your projects, learning entries, and resources.",
 };
 
@@ -27,16 +27,26 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-zinc-50 dark:bg-zinc-950 text-zinc-950 dark:text-zinc-50 min-h-screen flex`}
+        className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased text-white min-h-screen flex selection:bg-purple-500/30 selection:text-purple-200`}
       >
         <Providers>
-          <Sidebar />
-          <main className="flex-1 p-6 lg:p-10 ml-0 lg:ml-64 transition-all duration-300 relative">
-            {children}
-          </main>
-          <Toaster />
+          <div className="fixed inset-0 z-[-1] bg-black">
+            <ParticleBackground />
+          </div>
+
+          <div className="flex w-full relative z-10 mx-auto max-w-[1920px]">
+            <Sidebar />
+            <main className="flex-1 p-6 lg:p-12 ml-0 lg:ml-72 transition-all duration-500 relative min-h-screen">
+              {children}
+            </main>
+          </div>
+          <Toaster
+            toastOptions={{
+              className: "dark:bg-zinc-900/80 dark:backdrop-blur-xl dark:border-zinc-800 dark:text-white"
+            }}
+          />
         </Providers>
       </body>
     </html>
