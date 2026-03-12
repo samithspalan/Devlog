@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Entry {
+  id        String   @id @default(cuid())
+  title     String
+  body      String
+  date      DateTime
+  tags      String // SQLite doesn't support String[], we'll store as JSON string
+  projectId String?
+  project   Project? @relation(fields: [projectId], references: [id])
+  resources Resource[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  techStack   String // JSON stringified array
+  tags        String // JSON stringified array
+  status      String   // Idea | Building | Shipped | Paused
+  repoUrl     String?
+  liveUrl     String?
+  entries     Entry[]
+  resources   Resource[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Resource {
+  id         String   @id @default(cuid())
+  title      String
+  url        String
+  category   String   // Article | Video | Docs | Course | Other
+  notes      String?
+  isRead     Boolean  @default(false)
+  isFavorite Boolean  @default(false)
+  entryId    String?
+  entry      Entry?   @relation(fields: [entryId], references: [id])
+  projectId  String?
+  project    Project? @relation(fields: [projectId], references: [id])
+  createdAt  DateTime @default(now())
+}
