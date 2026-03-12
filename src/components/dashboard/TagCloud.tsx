@@ -22,18 +22,18 @@ export function TagCloud({ tags, className }: TagCloudProps) {
 
     return (
         <Card className={cn(
-            "glass-card border-white/10 bg-black/80 backdrop-blur-2xl transition-all duration-500 hover:border-white/20 relative group h-full",
+            "glass-card border-black/10 dark:border-white/10 bg-white/80 dark:bg-black/80 backdrop-blur-2xl transition-all duration-500 hover:border-black/20 dark:hover:border-white/20 relative group h-full",
             className
         )}>
             {/* Top Gradient Line (Right-aligned) */}
             <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-l from-transparent via-cyan-500 to-transparent opacity-50"></div>
 
-            <CardHeader className="pb-4 border-b border-white/5 relative z-10">
-                <CardTitle className="flex items-center gap-2 text-xl font-space text-white">
-                    <Hash className="w-5 h-5 text-cyan-400" />
+            <CardHeader className="pb-4 border-b border-black/5 dark:border-white/5 relative z-10">
+                <CardTitle className="flex items-center gap-2 text-xl font-space text-black dark:text-white">
+                    <Hash className="w-5 h-5 text-cyan-500 dark:text-cyan-400" />
                     Top Topics
                 </CardTitle>
-                <CardDescription className="text-zinc-400 font-medium">
+                <CardDescription className="text-zinc-600 dark:text-zinc-400 font-medium">
                     Most frequent learning areas
                 </CardDescription>
             </CardHeader>
@@ -50,12 +50,12 @@ export function TagCloud({ tags, className }: TagCloudProps) {
                                 key={tag.name}
                                 variant="outline"
                                 className={cn(
-                                    "px-3.5 py-1.5 text-sm font-medium transition-all duration-500 hover:-translate-y-1 cursor-default backdrop-blur-md",
+                                    "px-3.5 py-1.5 text-sm font-medium transition-all duration-500 hover:-translate-y-1 cursor-default backdrop-blur-md bg-white/50 dark:bg-transparent",
                                     badgeStyles[i % badgeStyles.length]
                                 )}
                             >
                                 {tag.name}
-                                <span className="ml-2 font-bold opacity-80 backdrop-blur-md bg-white/10 px-2 py-0.5 rounded-md text-xs">
+                                <span className="ml-2 font-bold opacity-80 backdrop-blur-md bg-black/10 dark:bg-white/10 px-2 py-0.5 rounded-md text-xs">
                                     {tag.count}
                                 </span>
                             </Badge>

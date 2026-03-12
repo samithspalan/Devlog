@@ -81,9 +81,8 @@ const ParticleBackground = () => {
         };
 
         const animate = () => {
-            // Create a slight trailing effect instead of full clear
-            ctx.fillStyle = isDarkMode ? 'rgba(0, 0, 0, 0.2)' : 'rgba(255, 255, 255, 0.2)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            // Clear canvas entirely to prevent solid background build-up
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             particlesRef.current.forEach(particle => {
                 particle.update();
@@ -91,7 +90,7 @@ const ParticleBackground = () => {
             });
 
             // Draw lines between close particles
-            ctx.strokeStyle = isDarkMode ? 'rgba(99, 102, 241, 0.15)' : 'rgba(79, 70, 229, 0.15)';
+            ctx.strokeStyle = isDarkMode ? 'rgba(99, 102, 241, 0.2)' : 'rgba(79, 70, 229, 0.35)';
             ctx.lineWidth = 1;
 
             for (let i = 0; i < particlesRef.current.length; i++) {
@@ -129,7 +128,7 @@ const ParticleBackground = () => {
     return (
         <canvas
             ref={canvasRef}
-            className="fixed inset-0 w-full h-full pointer-events-none opacity-40"
+            className="fixed inset-0 w-full h-full pointer-events-none"
             style={{ zIndex: 0 }}
         />
     );

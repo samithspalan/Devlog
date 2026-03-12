@@ -1,66 +1,89 @@
-# DevLog 📓
+# DevLog - Premium Developer Tracker
 
-DevLog is a Developer Learning Journal & Project Tracker built with the Next.js 15 App Router. It helps developers log their daily learnings, track side-projects from idea to shipped, and bookmark valuable resources, all in one modern dashboard.
+DevLog is a premium, highly interactive tracking application designed for developers to log their daily learning, manage side projects, and curate useful resources. It features a responsive glassmorphic UI, dynamic light/dark mode, and robust authentication.
 
-## Tech Stack 🚀
+## 🚀 Setup Instructions (Local Development)
 
-This project strictly adheres to the requested modern React stack:
+To run this project locally, ensure you have **Node.js** (v18+) installed and follow these steps:
 
-- **Framework**: Next.js 15 (App Router)
-- **Language**: TypeScript (strict mode, no \`any\`)
-- **Styling**: Tailwind CSS & shadcn/ui
-- **Database**: SQLite
-- **ORM**: Prisma
-- **Validation**: Zod (for strictly typed API routes and forms)
-- **Forms**: react-hook-form
-- **Server State**: React Query (\`@tanstack/react-query\`)
-- **Charts**: Recharts (for activity visualizations)
+1. **Clone the repository:**
+   ```bash
+   git clone <your-repository-url>
+   cd DevLog
+   ```
 
-## Features 🌟
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-1. **Dashboard Overview**: See streaks, stats, top learning topics (Tag Cloud), and activity history.
-2. **Learning Log**: Chronological feed of your learnings with rich text, tags, and project associations.
-3. **Project Tracker**: Board of projects categorized by status (Idea, Building, Shipped, Paused). Links to logs and external repos.
-4. **Resource Bookmarker**: Save helpful links, categorize them, and flag what's read or unread.
-5. **REST API**: Next.js Route Handlers power a complete set of RESTful APIs.
+3. **Set up Environment Variables:**
+   Create a `.env` file in the root directory and add your connection strings:
+   ```env
+   # PostgreSQL Connection (Neon Serverless)
+   DATABASE_URL="postgresql://user:password@endpoint.neon.tech/neondb?sslmode=require"
+   
+   # Clerk Authentication Keys
+   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="pk_test_..."
+   CLERK_SECRET_KEY="sk_test_..."
+   ```
 
-## Implementation Details 🛠️
+4. **Initialize the Database:**
+   Push the Prisma schema to your PostgreSQL database and generate the client.
+   ```bash
+   npx prisma db push
+   npx prisma generate
+   ```
 
-### Next.js API Routes (REST CRUD)
-Next.js 15 App Router provides an exceptional way to build standard REST APIs. Inside `src/app/api`, the folders cleanly separate `entries`, `projects`, and `resources` resources. 
+5. **Start the Development Server:**
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
 
-Each API endpoint:
-- Extracts its HTTP method from the exported function (`GET`, `POST`, `PUT`, `DELETE`).
-- Leverages Next.js `NextResponse` for typed JSON responses.
-- Catches runtime errors elegantly with `try/catch`. 
+---
 
-### Zod Validation
-We use **Zod** in `src/lib/validations.ts` as our single source of truth for schemas. 
-- In API `POST` and `PUT` methods, `request.json()` is passed to `.safeParse()`, catching invalid frontend data instantly and returning HTTP 400 with `flatten().fieldErrors`.
-- On the Frontend, Zod acts as a resolver for `react-hook-form` via `@hookform/resolvers/zod`. This prevents submission entirely if data is bad, yielding an amazing UX without server roundtrips.
-- `z.infer` dynamically generates TypeScript types out of the schema!
+## 🛠️ Tech Choices & Architecture
 
-### React Query Hooks
-State is managed locally but synced with the server using `@tanstack/react-query` inside `src/lib/hooks.ts`. 
-- **Querying**: Methods like `useEntries()` call REST GETs and automatically cache the array globally. Refetches happen behind the scenes for stale data.
-- **Mutations**: Hook functions like `useCreateEntry()` execute REST POSTs. Upon `onSuccess`, we call `queryClient.invalidateQueries` which silently asks the UI to re-fetch the fresh data, meaning we never have to manage `useEffect` fetching blocks manually!
+* **Framework:** Next.js (App Router)
+* **Styling:** Tailwind CSS v4 + Shadcn UI
+* **Animations:** Framer Motion
+* **Authentication:** Clerk (@clerk/nextjs)
 
-### Prisma & SQLite Database
-Prisma handles our strict relational definitions in `prisma/schema.prisma`. 
-- Every database interaction inside `src/app/api` goes through the Prisma Client, providing total TypeScript intellisense.
-- **Relationships**: A Project `hasMany` Entries, and Resources attach logically to both using Foreign Keys (`projectId` / `entryId`). 
-- **SQLite Note**: Since SQLite doesn't natively support arrays, tags and tech stacks are cleanly parsed/stringified to JSON under the hood. 
+### 🗄️ Database & ORM Selection
+**(CHOOSE ONE OPTION BELOW AND DELETE THE REST)**
 
-### Dashboard Calculations
-The backend logic sitting in `/api/dashboard/route.ts` runs complex aggregations completely locally on SQLite. 
-- Streaks count by tracking reverse chronological days `date-fns`. 
-- Recharts visualizations compute last-8-weeks tallies into array shapes the UI can instantly snap onto a beautiful un-styled bar chart.
+**👉 Option A (Neon + Prisma):**
+* **Database (Neon Serverless PostgreSQL):** Migrated to Neon Postgres as it pairs perfectly with Next.js, scaling automatically and handling thousands of concurrent connections effortlessly.
+* **ORM (Prisma):** Chosen for its unparalleled developer experience and type safety, ensuring robust and reliable database operations.
 
-## Setup & Running Locally 🏃
+**👉 Option B (Supabase + Drizzle):**
+* **Database (Supabase PostgreSQL):** Chosen for its robust backend-as-a-service features and seamless Postgres hosting.
+* **ORM (Drizzle):** Selected for its lightweight, highly performant SQL-like syntax and edge-compatibility with Next.js Server Components.
 
-1. **Install dependencies**: `npm install`
-2. **Generate Database**: `npx prisma generate` followed by `npx prisma db push`
-3. **Seed Mock Data**: `npm run prisma:seed` (Optional: seed uses `tsx` to insert realistic test entries)
-4. **Start Development**: `npm run dev`
+**👉 Option C (Local SQLite + Prisma):**
+* **Database (SQLite):** Kept as a lightweight, zero-configuration local database to keep local development fast and simple.
+* **ORM (Prisma):** Used to abstract SQL queries and provide a strictly typed, easy-to-use database client.
 
-Open `http://localhost:3000` to view DevLog!
+---
+
+## 🤖 AI Tools Used
+
+**(CHOOSE THE OPTIONS YOU USED AND DELETE THE REST)**
+
+* **Antigravity (Google DeepMind):** Used as the primary autonomous AI pair-programmer to handle deep architecture refactoring, Clerk middleware setup, database migrations, and complex light/dark theme toggle logic.
+* **ChatGPT (OpenAI):** Used for initial project ideation, brainstorming the database schema, and writing the copy for empty states.
+* **Claude (Anthropic):** Leveraged for debugging complex Tailwind v4 styling issues and planning the UI/UX layout.
+* **Cursor / GitHub Copilot:** Used extensively inside the IDE for inline code autocompletion, scaffolding repetitive UI components, and generating TypeScript interfaces.
+* **v0 by Vercel:** Used to rapidly prompt and generate the initial React outlines for the glassmorphic cards and the sidebar layout.
+
+---
+
+## 🚧 Known Bugs & Limitations
+
+**(CHOOSE APPLICABLE LOGS AND DELETE THE REST)**
+
+* **Internet Dependency:** Because this application uses Clerk and a cloud Postgres provider, it cannot authenticate or fetch data while entirely offline.
+* **Tailwind v4 Linting Warnings:** Depending on VS Code extensions, you may see occasional "Unknown At Rule" linting warnings in `globals.css` (e.g., `@theme`, `@custom-variant`). This is a cosmetic IDE issue due to the new syntax and does not affect the build.
+* **Particle Canvas Performance:** The interactive `<ParticleBackground />` component is optimized using `requestAnimationFrame`, but older mobile devices or low-powered laptops might experience frame drops.
+* **Hydration Mismatches:** Occasional console warnings regarding hydration mismatch may appear if browser extensions inject code into the HTML before React attaches.

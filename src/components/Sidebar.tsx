@@ -3,8 +3,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, BookOpen, FolderGit2, Bookmark } from "lucide-react";
+import { LayoutDashboard, BookOpen, FolderGit2, Bookmark, Moon, Sun } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 const navItems = [
     { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -15,16 +18,33 @@ const navItems = [
 
 export default function Sidebar() {
     const pathname = usePathname();
+    const { resolvedTheme, setTheme } = useTheme();
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     return (
-        <aside className="fixed inset-y-0 left-0 z-50 w-72 bg-black/80 backdrop-blur-2xl border-r border-white/10 hidden lg:flex flex-col h-screen">
-            <div className="flex items-center gap-3 px-8 h-24 mt-2">
-                <div className="relative w-12 h-12 rounded-xl overflow-hidden shadow-lg shadow-purple-500/20 border border-white/10 shrink-0 bg-zinc-900">
-                    <Image src="/logo.png" alt="DevLog Logo" fill className="object-cover" priority />
+        <aside className="fixed inset-y-0 left-0 z-50 w-72 bg-white/80 dark:bg-black/80 backdrop-blur-2xl border-r border-black/10 dark:border-white/10 hidden lg:flex flex-col h-screen">
+            <div className="flex items-center justify-between px-8 h-24 mt-2">
+                <div className="flex items-center gap-3">
+                    <div className="relative w-12 h-12 rounded-xl overflow-hidden shadow-lg shadow-purple-500/20 border border-black/10 dark:border-white/10 shrink-0 bg-white dark:bg-zinc-900">
+                        <Image src="/logo.png" alt="DevLog Logo" fill className="object-cover" priority />
+                    </div>
+                    <span className="text-2xl font-bold font-space bg-clip-text text-transparent bg-gradient-to-r from-black to-zinc-600 dark:from-white dark:to-zinc-400 tracking-tight">
+                        DevLog.
+                    </span>
                 </div>
-                <span className="text-2xl font-bold font-space bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-400 tracking-tight">
-                    DevLog.
-                </span>
+                {mounted && (
+                    <button
+                        onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+                        className="p-2 rounded-xl bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 border border-black/10 dark:border-white/10 transition-colors"
+                        aria-label="Toggle Theme"
+                    >
+                        {resolvedTheme === 'dark' ? <Sun className="w-5 h-5 text-zinc-400 hover:text-white" /> : <Moon className="w-5 h-5 text-zinc-600 hover:text-black" />}
+                    </button>
+                )}
             </div>
 
             <nav className="flex-1 px-4 space-y-2 mt-4">
@@ -60,7 +80,7 @@ export default function Sidebar() {
                             <span
                                 className={cn(
                                     "font-medium tracking-wide text-sm relative z-10 transition-colors duration-300",
-                                    isActive ? "text-white" : "text-zinc-400 group-hover:text-zinc-200"
+                                    isActive ? "text-indigo-600 dark:text-white" : "text-zinc-600 hover:text-black dark:text-zinc-400 dark:group-hover:text-zinc-200"
                                 )}
                             >
                                 {item.name}
@@ -70,16 +90,36 @@ export default function Sidebar() {
                 })}
             </nav>
 
-            <div className="p-8 border-t border-white/5 mt-auto bg-gradient-to-t from-black/50 to-transparent">
-                <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors cursor-pointer group">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-zinc-700 to-zinc-900 flex items-center justify-center border border-white/20 shadow-inner overflow-hidden">
-                        <div className="w-full h-full bg-indigo-500/20 animate-pulse"></div>
+            <div className="p-8 border-t border-black/10 dark:border-white/5 mt-auto bg-gradient-to-t from-black/5 dark:from-black/50 to-transparent">
+                <Show when="signed-in">
+                    <div className="flex items-center gap-3 p-3 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 hover:bg-black/10 dark:hover:bg-white/10 transition-colors cursor-pointer group">
+                        <UserButton
+                            appearance={{
+                                elements: {
+                                    userButtonAvatarBox: "w-10 h-10 border border-black/20 dark:border-white/20 shadow-inner",
+                                },
+                            }}
+                        />
+                        <div>
+                            <p className="text-sm font-semibold text-black dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-200 transition-colors tracking-tight">Manage Account</p>
+                            <p className="text-xs text-zinc-600 dark:text-zinc-500 font-medium">Logged In</p>
+                        </div>
                     </div>
-                    <div>
-                        <p className="text-sm font-semibold text-white group-hover:text-indigo-200 transition-colors tracking-tight">Engineer</p>
-                        <p className="text-xs text-zinc-500 font-medium">Local Workspace</p>
+                </Show>
+                <Show when="signed-out">
+                    <div className="flex flex-col gap-2 p-1">
+                        <SignInButton mode="modal">
+                            <button className="w-full flex items-center justify-center gap-2 p-3 rounded-xl bg-indigo-500/10 text-indigo-400 font-medium border border-indigo-500/20 hover:bg-indigo-500/20 hover:text-indigo-300 transition-all cursor-pointer">
+                                Sign In
+                            </button>
+                        </SignInButton>
+                        <SignUpButton mode="modal">
+                            <button className="w-full flex items-center justify-center gap-2 p-3 rounded-xl bg-black/5 dark:bg-white/5 font-medium border border-black/10 dark:border-white/10 hover:bg-black/10 dark:hover:bg-white/10 text-black dark:text-white transition-all cursor-pointer">
+                                Create Account
+                            </button>
+                        </SignUpButton>
                     </div>
-                </div>
+                </Show>
             </div>
         </aside>
     );

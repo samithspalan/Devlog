@@ -37,8 +37,8 @@ export default function ResourcesPage() {
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 max-w-6xl mx-auto">
             <div className="flex flex-col sm:flex-row items-end sm:items-center justify-between gap-4">
                 <div className="self-start">
-                    <h1 className="text-3xl font-bold tracking-tight">Bookmarks & Resources</h1>
-                    <p className="text-zinc-500 mt-1">Articles, videos, and documentation for your learning.</p>
+                    <h1 className="text-3xl font-bold tracking-tight text-black dark:text-white">Bookmarks & Resources</h1>
+                    <p className="text-zinc-600 dark:text-zinc-500 mt-1">Articles, videos, and documentation for your learning.</p>
                 </div>
                 <div className="flex items-center gap-4">
                     <Select value={filter} onValueChange={setFilter}>
@@ -80,17 +80,17 @@ export default function ResourcesPage() {
                     </motion.div>
                 ) : (
                     <div className="glass-card col-span-full flex flex-col items-center justify-center p-14 text-center rounded-xl border-dashed">
-                        <h3 className="mt-4 text-xl font-space font-bold text-white">No resources found</h3>
-                        <p className="mt-2 text-sm text-zinc-400 font-medium">
-                            {filter !== "All" ? `You haven't added any ${filter.toLowerCase()}s yet.` : "Save your first helpful link."}
+                        <h3 className="mt-4 text-xl font-space font-bold text-black dark:text-white">No resources found</h3>
+                        <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400 font-medium">
+                            {filter !== "All" ? `You haven't saved any ${filter.toLowerCase()}s yet.` : "Start collecting useful resources."}
                         </p>
                         {filter === "All" && (
-                            <Button onClick={() => setIsFormOpen(true)} variant="outline" className="mt-6 bg-white/5 border-white/10 hover:bg-white/10 text-white">
-                                Add Bookmark
+                            <Button onClick={() => setIsFormOpen(true)} variant="outline" className="mt-6 bg-black/5 border-black/10 hover:bg-black/10 dark:bg-white/5 dark:border-white/10 dark:hover:bg-white/10 text-black dark:text-white">
+                                Add Resource
                             </Button>
                         )}
                         {filter !== "All" && (
-                            <Button onClick={() => setFilter("All")} variant="outline" className="mt-6 bg-white/5 border-white/10 hover:bg-white/10 text-white">
+                            <Button onClick={() => setFilter("All")} variant="outline" className="mt-6 bg-black/5 border-black/10 hover:bg-black/10 dark:bg-white/5 dark:border-white/10 dark:hover:bg-white/10 text-black dark:text-white">
                                 Clear Filters
                             </Button>
                         )}

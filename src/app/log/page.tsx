@@ -32,8 +32,8 @@ export default function LogPage() {
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 max-w-4xl mx-auto">
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-3xl font-bold tracking-tight">Learning Log</h1>
-                    <p className="text-zinc-500 mt-1">Chronological journal of your daily learnings.</p>
+                    <h1 className="text-3xl font-bold tracking-tight text-black dark:text-white">Learning Log</h1>
+                    <p className="text-zinc-600 dark:text-zinc-500 mt-1">Chronological journal of your daily learnings.</p>
                 </div>
                 <div className="flex items-center gap-4">
                     <Button onClick={() => setIsFormOpen(true)} className="gap-2 bg-indigo-500 text-white hover:bg-indigo-600 shadow-[0_0_15px_-3px_rgba(99,102,241,0.5)] transition-all">
@@ -59,12 +59,12 @@ export default function LogPage() {
                     </motion.div>
                 ) : (
                     <div className="glass-card flex flex-col items-center justify-center p-14 text-center rounded-xl border-dashed">
-                        <h3 className="mt-4 text-xl font-space font-bold text-white">No entries yet</h3>
-                        <p className="mt-2 text-sm text-zinc-400 font-medium">
-                            Start documenting your learning journey by creating your first entry.
+                        <h3 className="mt-4 text-xl font-space font-bold text-black dark:text-white">No entries yet</h3>
+                        <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400 font-medium">
+                            Start tracking your learning journey.
                         </p>
-                        <Button onClick={() => setIsFormOpen(true)} variant="outline" className="mt-6 bg-white/5 border-white/10 hover:bg-white/10 text-white">
-                            Create Entry
+                        <Button onClick={() => setIsFormOpen(true)} variant="outline" className="mt-6 bg-black/5 border-black/10 hover:bg-black/10 dark:bg-white/5 dark:border-white/10 dark:hover:bg-white/10 text-black dark:text-white">
+                            New Entry
                         </Button>
                     </div>
                 )}

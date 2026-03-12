@@ -35,8 +35,8 @@ export default function DashboardPage() {
         return (
             <div className="space-y-8 max-w-7xl mx-auto">
                 <div>
-                    <h1 className="text-4xl font-space font-extrabold tracking-tight">Dashboard</h1>
-                    <p className="text-zinc-400 font-medium">Loading your telemetry...</p>
+                    <h1 className="text-4xl font-space font-extrabold tracking-tight text-black dark:text-white">Dashboard</h1>
+                    <p className="text-zinc-600 dark:text-zinc-400 font-medium">Loading your telemetry...</p>
                 </div>
                 <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                     <Skeleton className="h-[140px] w-full rounded-2xl bg-white/5" />
@@ -63,7 +63,7 @@ export default function DashboardPage() {
                         <h1 className="text-5xl font-extrabold font-space text-gradient tracking-tight">
                             Developer Overview
                         </h1>
-                        <p className="text-lg text-zinc-400 mt-2 font-medium flex items-center gap-2">
+                        <p className="text-lg text-zinc-600 dark:text-zinc-400 mt-2 font-medium flex items-center gap-2">
                             <Zap className="w-4 h-4 text-yellow-500" />
                             Your productivity telemetry at a glance.
                         </p>
